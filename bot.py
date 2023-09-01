@@ -14,15 +14,15 @@ import api as bitfinex
 
 class Bot:
     # Traded coin pairs
-    coin_pairs = ['btcusd', 'ethusd', 'iotusd', 'xrpusd', 'ltcusd',
+    coin_pairs = os.getenv('COIN_PAIRS', ['btcusd', 'ethusd', 'iotusd', 'xrpusd', 'ltcusd',
                   'zecusd', 'dshusd', 'eosusd', 'neousd', 'etcusd',
-                  'xtzusd', 'ampusd']
+                  'xtzusd', 'ampusd'])
     # Maximum spend in USD for single buy
-    max_spend_in_usd = 175
+    max_spend_in_usd = os.getenv('MAX_SPEND_IN_USD', 175)
     # Minimu spend in USD for single buy
-    min_spend_in_usd = 10
+    min_spend_in_usd = os.getenv('MIN_SPEND_IN_USD', 10)
     # Maximum number of different coins
-    max_number_of_coins = 7
+    max_number_of_coins = os.getenv('MAX_NUMBER_OF_COINS', 7)
     # Candle intervals to fetch
     interval = ["1m", "15m", "30m", "5m"]
     # Trade fees in percentage
@@ -41,7 +41,7 @@ class Bot:
     buy_attempts = dict()
     latest_price = dict()
     latest_score = dict()
-    aff_code = "RQr8dEzNJ"
+    aff_code = ""
     USD = 0
     balance = []
     available_currencies = []
@@ -55,7 +55,7 @@ class Bot:
     def __init__(self):
         self._refresh_balance()
 
-        gcloud_logging = True
+        gcloud_logging = False
         try:
             import google.cloud.logging
             from google.cloud.logging.handlers import CloudLoggingHandler
